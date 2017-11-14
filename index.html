@@ -1,1 +1,103 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <title>Battle for Hogwarts!</title>
+</head>
+
+<body>
+    <div class="page-header">
+        <h1 class="centered">Battle for Hogwarts!<small>The RPG</small></h1>
+    </div>
+
+
+    <div class='container'>
+        <div class="row">
+            <div class='col-md-12'>
+                <h3 class="center-block">Current Move</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="moveBox">
+                <h2 style="text-align: center;"><i>Choose a fighter and an opponent!</i></h2>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" id="battleGround">
+        <div class="row">
+        	<div class="col-md-12">
+	            <div class="col-md-4" id="goodGuys">
+	                <div class="row">Dumbledore's Army</div>
+	                <div class="col-md-12" id="armyLeft">
+	                	
+                		<div class="fighter" id="harry"><img src="assets/images/harry.jpg"></div>
+                		<div class="fighter" id="ron"><img src="assets/images/ron.jpg"></div>
+                		<div class="fighter" id="hermione"><img src="assets/images/hermione.jpg"></div>
+                		<div class="fighter" id="dumbledore"><img src="assets/images/dumbledore.jpg"></div>
+                	
+	                </div>
+	            </div>
+	            <div class="col-md-2" id="goodGuyFighter">
+	                <div class="row">Fighter</div>
+	                <div class="row" id="goodGuyCurrent" style="height: 400px">
+	                </div>
+	                <div class="row" id="goodGuyStats">
+	                	<p>Name: <p id="goodGuyName"></p></p>
+	                	<p>Hit Points: <p id="goodGuyHP"></p></p>
+	                </div>
+	            </div>
+	            <div class="col-md-2" id="badGuyFighter">
+	                <div class="row">Fighter</div>
+	                <div class="row" id="badGuyCurrent" style="height: 400px">
+	                </div>
+	                <div class="row" id="badGuyStats">
+	                	<p>Name: <p id="badGuyName"></p></p>
+	                	<p>Hit Points: <p id="badGuyHP"></p></p>
+	                </div>
+	            </div>
+	            <div class="col-md-4" id="badguys">
+	                <div class="row">Death Eaters</div>
+	                <div class="row" id="eatersLeft">
+	                	<div class="bFighter" id="voldemort"><img src="assets/images/voldemort.jpg"></div>
+                		<div class="bFighter" id="bellatrix"><img src="assets/images/bellatrix.jpg"></div>
+                		<div class="bFighter" id="lucius"><img src="assets/images/lucius.jpg"></div>
+                		<div class="bFighter" id="fenrir"><img src="assets/images/fenrir.jpg"></div>
+	                </div>
+	            </div>
+	        </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="center-block">What will you do?</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group btn-group-justified" role="group">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" style="background-color: blue; color:white" id='attack'>Attack</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" style="background-color: green; color:white" id='heal'>Heal</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" style="background-color: orange; color:white" id='special'>Special</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" style="background-color: red; color:white" id='switch'>Switch</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="music"></div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
+</body>
+
+</html>
