@@ -1,7 +1,7 @@
 $(document).ready(function() {
     alert('Choose a fighter and opponent. You get the first attack!');
     var playMusic = document.getElementById('music');
-    //playMusic = new Audio('assets/audio/HPTheme.mp3').play();
+    playMusic = new Audio('assets/audio/HPTheme.mp3').play();
     var Wizard = function(name, hp, luck, attack, specialSpellName, id) {
         this.id = id;
         this.name = name;
