@@ -1,7 +1,7 @@
 $(document).ready(function() {
-    
+    alert('Choose a fighter and opponent. You get the first attack!');
     var playMusic = document.getElementById('music');
-    // playMusic = new Audio('assets/audio/HPTheme.mp3').play();
+    //playMusic = new Audio('assets/audio/HPTheme.mp3').play();
     var Wizard = function(name, hp, luck, attack, specialSpellName, id) {
         this.id = id;
         this.name = name;
@@ -29,10 +29,10 @@ $(document).ready(function() {
 
 
     }
-
-    var harry = new Wizard('Harry Potter', 150, 8, 25, 'Harry shouted "Expelliarmus!"', 1);
-    var ron = new Wizard('Ron Weasley', 200, 4, 20, 'Ron blasted "Wingardium Leviosa"', 2);
-    var hermione = new Wizard('Hermione Granger', 120, 7, 35, 'Hermione directed Stupefy at the evil wizard!', 3);
+    
+    var harry = new Wizard('Harry Potter', 275, 8, 25, 'Harry shouted "Expelliarmus!"', 1);
+    var ron = new Wizard('Ron Weasley', 225, 4, 20, 'Ron blasted "Wingardium Leviosa"', 2);
+    var hermione = new Wizard('Hermione Granger', 180, 7, 35, 'Hermione directed Stupefy at the evil wizard!', 3);
     var dumbledore = new Wizard('Albus Dumbledore', 300, 10, 50, 'Dumbledore murmered a spell softly under his breath...', 4);
 
     var voldemort = new Wizard('Lord Voldemort', 350, 9, 45, 'Lord Voldemort cast Cruicio upon his opponent, torturing them!', 5);
@@ -40,16 +40,17 @@ $(document).ready(function() {
     var bellatrix = new Wizard('Bellatrix LeStrange', 140, 6, 30, 'Bellatrix brazenly uses the Impediment Jinx on her opponent!', 7);
     var fenrir = new Wizard('Fenrir Greyback', 250, 3, 10, 'Fenrir charges! His teeth tear into his opponent!', 8);
 
-
+    
     var activeFighter;
     var activeBadGuy;
+    var activeDiv;
     $('.fighter').on('click', function() {
         activeFighter = $(this).attr('id');
-
+        activeDiv = $(this);
         $('#goodGuyCurrent').append(this);
 
         var name = $('<p>');
-        name.text(activeFighter.name);
+        name.text(eval(activeFighter).name);
 
         var hp = $('<p>')
         hp.text(eval(activeFighter).hp);
@@ -75,19 +76,18 @@ $(document).ready(function() {
 
 
     var turn = true;
+    var totalBadHP = 940;
+    var totalGoodHP = 980;
 
     $('button').on('click', function() {
-      var enemy = eval(activeBadGuy)
-      var goodGuy = eval(activeFighter)
-      // var enemyHP = enemy.hp;
-      // var fighterHP = goodGuy.hp;
+      var enemy = eval(activeBadGuy);
+      var goodGuy = eval(activeFighter);
       var badSpecial = enemy.specialSpellName;
       var ggSpecial = goodGuy.specialSpellName;
       var enemyAttack = enemy.attack;
       var ggAttack = goodGuy.attack;
-      var message = $('<h2>').css('text-align','center')
-      console.log(turn)
-
+      var message = $('<h2>').css('text-align','center');
+      
       var enemyTurn = function() {
         
         if (turn === false) {
@@ -100,15 +100,38 @@ $(document).ready(function() {
               turn = true;
           } else if (randomizer < 4) {
               goodGuy.hp = goodGuy.hp - enemy.special();
+              totalGoodHP = totalGoodHP - enemy.special();
               message.text(badSpecial)
               $('#goodGuyHP').text(goodGuyHP.hp);
               $('#moveBox').text(badSpecial).css({ "text-align": "center", "font-size": "2em" });
+              console.log(totalGoodHP,totalBadHP)
+              if (goodGuy.deathCheck()) {
+                $('#goodGuyCurrent').empty();
+                $('#goodGuyName').empty();
+                $('#goodGuyHP').empty();
+                if (totalGoodHP < 1) {
+                  alert('Voldemort has won...');
+                  location.reload();
+                  }
+               
+              }
               turn = true;
           } else {
               goodGuy.hp = goodGuy.hp - enemyAttack;
-              message.text(enemy.name + " attacks!")
+              totalGoodHP = totalGoodHP - enemyAttack;
+              message.text(enemy.name + " attacks!");
               $('#goodGuyHP').text(goodGuy.hp);
-              $('#moveBox').html(message)
+              $('#moveBox').html(message);
+              
+              if (goodGuy.deathCheck()) {
+                $('#goodGuyCurrent').empty();
+                $('#goodGuyName').empty();
+                $('#goodGuyHP').empty();
+                if (totalGoodHP < 1) {
+                  alert('Voldemort has won...');
+                  location.reload();
+                  }
+              }
               turn = true;
           }
         }
@@ -116,19 +139,29 @@ $(document).ready(function() {
       
       if ($(this).attr('id') === "attack") {
         enemy.hp = enemy.hp - ggAttack;
+        totalBadHP = totalBadHP - ggAttack;
         message.text(goodGuy.name + " attacks!")
         
         $('#badGuyHP').text(enemy.hp);
-        $('#moveBox').html(message)
-        console.log(message)
+        $('#moveBox').html(message);
+        
+        if (enemy.deathCheck()) {
+          
+          $('#badGuyCurrent').empty();
+          $('#badGuyName').empty();
+          $('#badGuyHP').empty();
+          if (totalBadHP < 1) {
+            alert('Harry defeated the Death Eaters!');
+            location.reload();
+          }
 
+        };
         turn = false;  
-        console.log(message.text)
 
         //sleepFor(500);
         setTimeout(function(){
           enemyTurn();
-        },500);
+        },2000);
         //enemyTurn();
        
       } 
@@ -140,34 +173,41 @@ $(document).ready(function() {
         turn = false; 
         setTimeout(function(){
           enemyTurn();
-        },500);
+        },2000);
 
       }
       else if ($(this).attr('id') === "special") {
         enemy.hp = enemy.hp - goodGuy.special();
-        //specialSpellName is coming up as an object
+        totalBadHP = totalBadHP - goodGuy.special();
         message.text(ggSpecial);
         $('#badGuyHP').text(enemy.hp);    
-        $('#moveBox').text(ggSpecial);
+        $('#moveBox').html(ggSpecial);
+        
+        if (enemy.deathCheck()) {
+          
+          $('#badGuyCurrent').empty();
+          $('#badGuyName').empty();
+          $('#badGuyHP').empty();
+          if (totalBadHP < 1) {
+            alert('Harry defeated the Death Eaters!');
+            location.reload();
+          }
+        };
         turn = false;
-        // setTimeout(function(){
-        //   enemyTurn();
-        // },500);
+        setTimeout(function(){
+          enemyTurn();
+        },2000);
 
 
       } else if ($(this).attr('id') === "switch") {
+        $('#armyLeft').append(activeDiv);
         message.text('Pick a new character...')
-        $('#moveBox').text(message)
+        $('#moveBox').html(message)
         $('#goodGuyCurrent').empty();
         $('#goodGuyName').empty();
         $('#goodGuyHP').empty();
        }
 
-       
-
-
-
-       
       
     })
 })

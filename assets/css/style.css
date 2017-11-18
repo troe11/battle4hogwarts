@@ -1,6 +1,14 @@
-body {
-	background-image: url('../images/bg.jpeg');
+#battleGround {
+	background-image: url('../images/hogwarts.jpg');
 	background-size: cover;
+	text-align: center;
+}
+
+#armyLeft, #eatersLeft {
+	margin-top: 12%;
+}
+body {
+	background-color: #b6a07e;
 }
 
 h3, h1 {
@@ -8,13 +16,9 @@ h3, h1 {
 	text-align: center;
 }
 
-#battleGround {
-	text-align: center;
-}
-
 .col-md-4, .col-md-2 {
-	border: grey solid 5px;
-	height: 567px;
+	border: black solid 10px;
+	height: 750px;
 }
 
 img {
